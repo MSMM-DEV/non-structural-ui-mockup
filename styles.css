@@ -2367,66 +2367,7 @@ ul { list-style: none; }
   .wo-header-actions { width: 100%; }
   .wo-header-actions .btn-icon { flex: 0 0 auto; }
 
-  /* === SCHEDULED REPORTS MOBILE CARDS === */
-  .sr-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .sr-new-btn { width: 100%; justify-content: center; }
-  .sr-table-header { display: none; }
-  .sr-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "report  report"
-      "freq    next"
-      "recip   recip"
-      "status  actions";
-    gap: 6px 8px;
-    padding: 16px;
-    align-items: center;
-  }
-  .sr-td {
-    font-size: 0.76rem;
-  }
-  .sr-td.report {
-    grid-area: report;
-    font-weight: 600;
-    font-size: 0.82rem;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-light);
-    margin-bottom: 2px;
-  }
-  .sr-td.freq {
-    grid-area: freq;
-  }
-  .sr-td.freq::before { content: 'Frequency: '; color: var(--text-muted); font-weight: 500; }
-  .sr-td.next {
-    grid-area: next;
-    text-align: right;
-    font-size: 0.72rem;
-  }
-  .sr-td.next::before { content: 'Next: '; color: var(--text-muted); font-weight: 500; }
-  .sr-td.recip {
-    grid-area: recip;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    align-items: center;
-  }
-  .sr-td.recip::before { content: 'To: '; color: var(--text-muted); font-weight: 500; font-size: 0.72rem; }
-  .sr-td.status-col {
-    grid-area: status;
-  }
-  .sr-td.actions-col {
-    grid-area: actions;
-    display: flex;
-    gap: 6px;
-    justify-content: flex-end;
-  }
-  .sr-td.actions-col .sr-action-icon {
-    width: 34px;
-    height: 34px;
-    background: var(--bg-section);
-    border: 1px solid var(--border);
-  }
+  /* === SCHEDULED REPORTS MOBILE — moved to after base styles (below line 3663) === */
 
   /* Heatmap */
   .heatmap-header { flex-direction: column; align-items: flex-start; }
@@ -2557,20 +2498,7 @@ ul { list-style: none; }
   .funnel-label span { font-size: 0.6rem; }
   .funnel-bar { height: 22px; }
 
-  /* === SCHEDULED REPORTS 480px === */
-  .scheduled-reports { padding: 14px; }
-  .sr-form-row { grid-template-columns: 1fr; }
-  .sr-input { padding: 12px 14px; font-size: 0.82rem; }
-  .sr-row { padding: 14px 12px; gap: 5px; }
-  .sr-td.report { font-size: 0.78rem; padding-bottom: 6px; }
-  .sr-td.freq,
-  .sr-td.next { font-size: 0.72rem; }
-  .sr-email-chip { max-width: 140px; font-size: 0.62rem; }
-  .sr-new-btn { font-size: 0.72rem; padding: 10px 14px; }
-  .sr-td.actions-col .sr-action-icon {
-    width: 32px;
-    height: 32px;
-  }
+  /* === SCHEDULED REPORTS 480px — moved to after base styles (below line 3663) === */
 
   /* Chart legend */
   .chart-legend-custom { gap: 8px; flex-wrap: wrap; justify-content: center; }
@@ -3660,6 +3588,87 @@ ul { list-style: none; }
   background: var(--bg-section);
   color: var(--accent);
   border-color: var(--accent);
+}
+
+/* ---------- Scheduled Reports — Mobile Overrides ---------- */
+/* MUST come after base SR styles so they actually override */
+@media (max-width: 768px) {
+  .sr-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .sr-new-btn { width: 100%; justify-content: center; }
+  .sr-table { overflow: visible; }
+  .sr-table-header { display: none; }
+  .sr-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "report  report"
+      "freq    next"
+      "recip   recip"
+      "status  actions";
+    gap: 6px 8px;
+    padding: 16px;
+    align-items: center;
+  }
+  .sr-td {
+    font-size: 0.76rem;
+  }
+  .sr-td.report {
+    grid-area: report;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 2px;
+  }
+  .sr-td.freq {
+    grid-area: freq;
+  }
+  .sr-td.freq::before { content: 'Frequency: '; color: var(--text-muted); font-weight: 500; }
+  .sr-td.next {
+    grid-area: next;
+    text-align: right;
+    font-size: 0.72rem;
+  }
+  .sr-td.next::before { content: 'Next: '; color: var(--text-muted); font-weight: 500; }
+  .sr-td.recip {
+    grid-area: recip;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .sr-td.recip::before { content: 'To: '; color: var(--text-muted); font-weight: 500; font-size: 0.72rem; }
+  .sr-td.status-col {
+    grid-area: status;
+  }
+  .sr-td.actions-col {
+    grid-area: actions;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .sr-td.actions-col .sr-action-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--bg-section);
+    border: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 480px) {
+  .scheduled-reports { padding: 14px; }
+  .sr-form-row { grid-template-columns: 1fr; }
+  .sr-input { padding: 12px 14px; font-size: 0.82rem; }
+  .sr-row { padding: 14px 12px; gap: 5px; }
+  .sr-td.report { font-size: 0.78rem; padding-bottom: 6px; }
+  .sr-td.freq,
+  .sr-td.next { font-size: 0.72rem; }
+  .sr-email-chip { max-width: 140px; font-size: 0.62rem; }
+  .sr-new-btn { font-size: 0.72rem; padding: 10px 14px; }
+  .sr-td.actions-col .sr-action-icon {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* ---------- Inspector Mobile Bottom Tab Bar ---------- */
