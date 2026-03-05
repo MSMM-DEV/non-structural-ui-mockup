@@ -476,25 +476,35 @@ function openPropertyDetail(prop) {
       <div class="detail-photo" style="background-image:url('${houseImages.left}')"><span>Left</span></div>
       <div class="detail-photo" style="background-image:url('${houseImages.right}')"><span>Right</span></div>
     </div>
-    <div class="detail-flags">
-      ${scoreDisplay}
-      <span class="detail-flag ok">No flood damage</span>
+    <div class="detail-meta-row">
+      <div class="detail-flags">
+        ${scoreDisplay}
+        <span class="detail-flag ok">No flood damage</span>
+      </div>
+      <div class="detail-info-line">
+        <span class="detail-info-label">Assessment:</span> ${prop.type}
+      </div>
+      <div class="detail-info-line">
+        <span class="detail-info-label">Status:</span> <strong style="color:${getStatusColor(prop.status)}">${statusLabels[prop.status]}</strong>
+      </div>
     </div>
-    <p style="font-size:0.8rem;color:var(--gray);margin-bottom:12px;">Assessment: ${prop.type}</p>
-    <p style="font-size:0.75rem;color:var(--gray);margin-bottom:16px;">Status: <strong style="color:${getStatusColor(prop.status)}">${statusLabels[prop.status]}</strong></p>
     ${prop.status === 'green' ? `
       <button class="btn-primary btn-full" onclick="alert('Inspection scheduled (mock)')">
-        <span>Schedule Inspection</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Schedule Inspection</span>
       </button>
     ` : ''}
   `;
 
   panel.style.display = 'block';
+  // Add class to parent so CSS can hide legend on mobile
+  panel.closest('.insp-map-area')?.classList.add('detail-open');
 }
 
 function closeDetailPanel() {
-  document.getElementById('insp-detail-panel').style.display = 'none';
+  const panel = document.getElementById('insp-detail-panel');
+  panel.style.display = 'none';
+  panel.closest('.insp-map-area')?.classList.remove('detail-open');
 }
 
 function toggleInspSidebar() {

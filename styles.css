@@ -1585,6 +1585,44 @@ ul { list-style: none; }
   color: var(--green);
   border-color: rgba(22, 163, 74, 0.15);
 }
+.detail-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.detail-info-line {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.detail-info-label {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.btn-primary.btn-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-primary.btn-full:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
 
 /* ============================================================
    SCREEN: WORK ORDERS
@@ -2392,6 +2430,89 @@ ul { list-style: none; }
     left: auto;
     padding: 10px 12px;
     min-width: 140px;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  /* Hide legend when detail panel is open */
+  .insp-map-area.detail-open .map-legend {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+  }
+  /* Also hide mobile filter btn when detail panel is open */
+  .insp-map-area.detail-open .mobile-filter-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* === MOBILE DETAIL PANEL BOTTOM SHEET === */
+  .insp-detail-panel {
+    max-height: 65%;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+  }
+  .insp-detail-panel::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 10px auto 0;
+  }
+  .detail-close {
+    top: 8px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+  }
+  .detail-content {
+    padding: 8px 16px 20px;
+  }
+  .detail-content h3 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+    padding-right: 36px;
+  }
+  .detail-content .detail-addr {
+    font-size: 0.78rem;
+    margin-bottom: 12px;
+  }
+  .detail-photos {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .detail-photo {
+    max-height: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 6px;
+  }
+  .detail-photo span {
+    font-size: 0.52rem;
+    padding: 1px 4px;
+  }
+  .detail-flags {
+    gap: 5px;
+    margin-bottom: 0;
+  }
+  .detail-flag {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+  }
+  .detail-meta-row {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .detail-info-line {
+    font-size: 0.75rem;
+  }
+  .detail-info-label {
+    font-size: 0.68rem;
+  }
+  .btn-primary.btn-full {
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    border-radius: 10px;
   }
 
   /* AI hero banner */
@@ -2515,12 +2636,20 @@ ul { list-style: none; }
   .wo-add-comment { flex-direction: column; gap: 6px; }
   .wo-comment-submit { width: 100%; padding: 10px; }
 
-  /* Inspector detail panel */
-  .insp-detail-panel { max-height: 80%; }
-  .detail-content { padding: 16px 14px; }
-  .detail-photo { max-height: 65px; }
-  .detail-flags { gap: 4px; }
-  .detail-flag { font-size: 0.65rem; padding: 3px 8px; }
+  /* Inspector detail panel — 480 */
+  .insp-detail-panel { max-height: 75%; }
+  .detail-content { padding: 6px 14px 16px; }
+  .detail-content h3 { font-size: 0.92rem; }
+  .detail-content .detail-addr { font-size: 0.72rem; margin-bottom: 10px; }
+  .detail-photos { gap: 3px; }
+  .detail-photo { max-height: 52px; border-radius: 5px; }
+  .detail-photo span { font-size: 0.48rem; }
+  .detail-flags { gap: 4px; margin-bottom: 0; }
+  .detail-flag { font-size: 0.62rem; padding: 2px 7px; }
+  .detail-meta-row { gap: 5px; margin-bottom: 10px; }
+  .detail-info-line { font-size: 0.7rem; }
+  .detail-info-label { font-size: 0.62rem; }
+  .btn-primary.btn-full { padding: 11px 14px; font-size: 0.78rem; }
 
   /* Docusign */
   .docusign-body { padding: 16px 14px; }
@@ -3737,5 +3866,11 @@ ul { list-style: none; }
   }
   .has-insp-bottom-nav .map-legend {
     bottom: 70px;
+  }
+  /* Hide legend + filter btn when detail panel is open with bottom nav */
+  .has-insp-bottom-nav .insp-map-area.detail-open .map-legend,
+  .has-insp-bottom-nav .insp-map-area.detail-open .mobile-filter-btn {
+    opacity: 0;
+    pointer-events: none;
   }
 }
