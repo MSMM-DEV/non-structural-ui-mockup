@@ -2312,36 +2312,45 @@ ul { list-style: none; }
   .bro-stats { grid-template-columns: repeat(2, 1fr); }
   .bro-prog-label { min-width: 56px; font-size: 0.65rem; }
 
-  /* === ROE BREAKDOWN - CARD LAYOUT === */
+  /* === ROE BREAKDOWN - COMPACT 2-LINE ROWS === */
   .roe-br-row.header { display: none; }
   .roe-br-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "zip  area  rate"
+      "sent sent  nr";
+    gap: 2px 8px;
+    padding: 10px 0;
     align-items: center;
-    gap: 6px;
-    padding: 12px 0;
   }
   .roe-br-zip {
+    grid-area: zip;
     font-size: 0.76rem;
     font-weight: 600;
   }
   .roe-br-area {
+    grid-area: area;
     font-size: 0.72rem;
     color: var(--text-muted);
-    flex: 1;
   }
   .roe-br-rate {
-    order: 0;
+    grid-area: rate;
     text-align: right;
     width: auto;
   }
-  .roe-br-sent,
-  .roe-br-nr {
+  .roe-br-sent {
+    grid-area: sent;
     font-size: 0.7rem;
     text-align: left;
   }
-  .roe-br-sent::before { content: 'Sent: '; font-weight: 600; color: var(--text-muted); font-family: var(--font-body); }
-  .roe-br-nr::before { content: 'No Reply: '; font-weight: 600; font-family: var(--font-body); }
+  .roe-br-nr {
+    grid-area: nr;
+    font-size: 0.7rem;
+    text-align: right;
+  }
+  .roe-br-sent::before { content: 'Sent '; font-weight: 500; color: var(--text-muted); font-family: var(--font-body); }
+  .roe-br-nr::before { content: 'NR '; font-weight: 500; color: var(--text-muted); font-family: var(--font-body); }
 
   /* === PIE CHART LEGEND FIX === */
   .roe-pie-container {
@@ -2363,38 +2372,61 @@ ul { list-style: none; }
   .sr-new-btn { width: 100%; justify-content: center; }
   .sr-table-header { display: none; }
   .sr-row {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "report  report"
+      "freq    next"
+      "recip   recip"
+      "status  actions";
+    gap: 6px 8px;
     padding: 16px;
+    align-items: center;
   }
   .sr-td {
     font-size: 0.76rem;
   }
   .sr-td.report {
-    width: 100%;
+    grid-area: report;
     font-weight: 600;
     font-size: 0.82rem;
-    padding-bottom: 6px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--border-light);
+    margin-bottom: 2px;
+  }
+  .sr-td.freq {
+    grid-area: freq;
   }
   .sr-td.freq::before { content: 'Frequency: '; color: var(--text-muted); font-weight: 500; }
+  .sr-td.next {
+    grid-area: next;
+    text-align: right;
+    font-size: 0.72rem;
+  }
   .sr-td.next::before { content: 'Next: '; color: var(--text-muted); font-weight: 500; }
   .sr-td.recip {
-    width: 100%;
+    grid-area: recip;
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-  }
-  .sr-td.recip::before { content: 'Recipients: '; color: var(--text-muted); font-weight: 500; width: 100%; display: block; margin-bottom: 2px; font-size: 0.68rem; }
-  .sr-row-bottom {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
   }
-  .sr-td.status-col { order: unset; }
-  .sr-td.actions-col { order: unset; margin-left: auto; }
+  .sr-td.recip::before { content: 'To: '; color: var(--text-muted); font-weight: 500; font-size: 0.72rem; }
+  .sr-td.status-col {
+    grid-area: status;
+  }
+  .sr-td.actions-col {
+    grid-area: actions;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .sr-td.actions-col .sr-action-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--bg-section);
+    border: 1px solid var(--border);
+  }
 
   /* Heatmap */
   .heatmap-header { flex-direction: column; align-items: flex-start; }
@@ -2501,25 +2533,20 @@ ul { list-style: none; }
   .bro-prog-val { font-size: 0.65rem; min-width: 32px; }
   .bro-ai-insight p { font-size: 0.68rem; }
 
-  /* === ROE PIE CHART + BREAKDOWN MOBILE === */
+  /* === ROE PIE CHART + BREAKDOWN 480px === */
   .roe-pie-container {
     height: auto;
     min-height: 240px;
   }
+  /* Tighten the grid rows from 768px */
   .roe-br-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-    padding: 10px 12px;
-    margin-bottom: 6px;
-    background: var(--bg-section);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
+    padding: 7px 0;
+    gap: 1px 5px;
   }
-  .roe-br-zip { font-size: 0.74rem; font-weight: 600; }
-  .roe-br-area { font-size: 0.68rem; }
-  .roe-br-sent, .roe-br-nr { font-size: 0.7rem; }
-  .roe-br-rate { margin-top: 2px; }
+  .roe-br-zip { font-size: 0.7rem; }
+  .roe-br-area { font-size: 0.64rem; }
+  .roe-br-sent, .roe-br-nr { font-size: 0.66rem; }
+  .roe-br-rate { font-size: 0.64rem; padding: 1px 6px; }
   .roe-total-badge { font-size: 0.68rem; }
   .roe-breakdown { gap: 0; }
 
@@ -2534,10 +2561,16 @@ ul { list-style: none; }
   .scheduled-reports { padding: 14px; }
   .sr-form-row { grid-template-columns: 1fr; }
   .sr-input { padding: 12px 14px; font-size: 0.82rem; }
-  .sr-row { padding: 14px 12px; }
-  .sr-td.report { font-size: 0.78rem; }
+  .sr-row { padding: 14px 12px; gap: 5px; }
+  .sr-td.report { font-size: 0.78rem; padding-bottom: 6px; }
+  .sr-td.freq,
+  .sr-td.next { font-size: 0.72rem; }
   .sr-email-chip { max-width: 140px; font-size: 0.62rem; }
   .sr-new-btn { font-size: 0.72rem; padding: 10px 14px; }
+  .sr-td.actions-col .sr-action-icon {
+    width: 32px;
+    height: 32px;
+  }
 
   /* Chart legend */
   .chart-legend-custom { gap: 8px; flex-wrap: wrap; justify-content: center; }
