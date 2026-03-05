@@ -113,10 +113,27 @@ function updateNav() {
 
   // Show stepper only for homeowner flow
   const homeownerScreens = ['homeowner-landing', 'verification', 'docusign', 'photo-upload', 'report'];
-  if (currentRole === 'homeowner' && homeownerScreens.includes(currentScreen)) {
+  const showStepper = currentRole === 'homeowner' && homeownerScreens.includes(currentScreen);
+  if (showStepper) {
     stepper.classList.remove('hidden');
+    document.body.classList.add('stepper-visible');
   } else {
     stepper.classList.add('hidden');
+    document.body.classList.remove('stepper-visible');
+  }
+
+  // Inspector mobile bottom nav (CSS controls visibility at breakpoints)
+  const inspMobileNav = document.getElementById('insp-mobile-nav');
+  const inspScreens = ['inspector-map', 'inspector-workorders'];
+  if (currentRole === 'inspector' && inspScreens.includes(currentScreen)) {
+    inspMobileNav.classList.add('insp-nav-active');
+    document.body.classList.add('has-insp-bottom-nav');
+    // Update active tab
+    document.getElementById('insp-tab-map').classList.toggle('active', currentScreen === 'inspector-map');
+    document.getElementById('insp-tab-wo').classList.toggle('active', currentScreen === 'inspector-workorders');
+  } else {
+    inspMobileNav.classList.remove('insp-nav-active');
+    document.body.classList.remove('has-insp-bottom-nav');
   }
 
   // Show back button
@@ -777,11 +794,12 @@ function initROEPieChart() {
         legend: {
           position: 'bottom',
           labels: {
-            padding: 14,
+            padding: window.innerWidth <= 480 ? 8 : 14,
             usePointStyle: true,
             pointStyle: 'circle',
-            font: { family: "'Outfit', sans-serif", size: 11 },
-            color: '#4A5B6E'
+            font: { family: "'Outfit', sans-serif", size: window.innerWidth <= 480 ? 9 : 11 },
+            color: '#4A5B6E',
+            boxWidth: window.innerWidth <= 480 ? 8 : 12
           }
         },
         tooltip: {
@@ -898,18 +916,37 @@ function createParticles() {
   }
 }
 
+// ==================== INSPECTOR TAB SWITCHING (MOBILE) ====================
+function switchInspectorTab(screenId) {
+  if (currentScreen === screenId) return;
+  // Switch tabs without pushing to history (sibling navigation)
+  const prevScreen = document.getElementById('screen-' + currentScreen);
+  const nextScreen = document.getElementById('screen-' + screenId);
+  if (!prevScreen || !nextScreen) return;
+
+  prevScreen.classList.remove('active');
+  prevScreen.classList.add('exit-left');
+  setTimeout(() => prevScreen.classList.remove('exit-left'), 500);
+  nextScreen.classList.add('active');
+  currentScreen = screenId;
+
+  updateNav();
+  addInspectorNav();
+  if (screenId === 'inspector-map') initInspectorMap();
+}
+
 // ==================== INSPECTOR NAV LINKS ====================
 // Add work orders nav link for inspector
 function addInspectorNav() {
   const breadcrumb = document.getElementById('nav-breadcrumb');
   if (currentRole === 'inspector') {
     breadcrumb.innerHTML = `
-      <button class="nav-tab ${currentScreen === 'inspector-map' ? 'active' : ''}" onclick="navigateTo('inspector-map')" style="
+      <button class="nav-tab ${currentScreen === 'inspector-map' ? 'active' : ''}" onclick="switchInspectorTab('inspector-map')" style="
         background: none; border: none; color: ${currentScreen === 'inspector-map' ? 'var(--teal)' : 'var(--gray)'};
         font-size: 0.8rem; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: color 0.3s;
         border-bottom: 2px solid ${currentScreen === 'inspector-map' ? 'var(--teal)' : 'transparent'};
       ">Map</button>
-      <button class="nav-tab ${currentScreen === 'inspector-workorders' ? 'active' : ''}" onclick="navigateTo('inspector-workorders')" style="
+      <button class="nav-tab ${currentScreen === 'inspector-workorders' ? 'active' : ''}" onclick="switchInspectorTab('inspector-workorders')" style="
         background: none; border: none; color: ${currentScreen === 'inspector-workorders' ? 'var(--teal)' : 'var(--gray)'};
         font-size: 0.8rem; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: color 0.3s;
         border-bottom: 2px solid ${currentScreen === 'inspector-workorders' ? 'var(--teal)' : 'transparent'};

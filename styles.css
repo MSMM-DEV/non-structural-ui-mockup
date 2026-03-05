@@ -2157,8 +2157,14 @@ ul { list-style: none; }
   .role-card p { margin-bottom: 0; }
   .role-arrow { margin-left: auto; }
 
+  /* === HOMEOWNER STEPPER FIX === */
   .mobile-stepper { display: block; }
   .mobile-stepper.hidden { display: none; }
+  /* When stepper is visible, push content down so it doesn't overlap.
+     Stepper is ~70px tall (26px padding + ~44px content). */
+  .stepper-visible .screen-scroll {
+    padding-top: calc(var(--nav-height) + 72px);
+  }
 
   .verify-split {
     grid-template-columns: 1fr;
@@ -2179,8 +2185,29 @@ ul { list-style: none; }
   .report-referrals .referral-list {
     grid-template-columns: 1fr;
   }
+
+  /* === AI METHODOLOGY RESPONSIVE === */
   .methodology-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .method-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+  }
+  .method-item strong {
+    min-width: 90px;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+  }
+  .method-item span,
+  .method-item p {
+    font-size: 0.68rem;
+  }
+  .ai-methodology > p {
+    font-size: 0.72rem;
   }
 
   .report-score {
@@ -2201,7 +2228,7 @@ ul { list-style: none; }
     justify-content: center;
   }
 
-  /* Inspector mobile */
+  /* === INSPECTOR MOBILE === */
   .insp-sidebar {
     position: absolute;
     left: 0;
@@ -2221,6 +2248,11 @@ ul { list-style: none; }
 
   .insp-detail-panel { max-height: 70%; }
 
+  /* Inspector mobile bottom tab bar — only show when JS has activated it */
+  .insp-mobile-nav.insp-nav-active {
+    display: block;
+  }
+
   /* KPI */
   .kpi-strip {
     grid-template-columns: repeat(2, 1fr);
@@ -2229,7 +2261,19 @@ ul { list-style: none; }
 
   .admin-header { padding-top: calc(var(--nav-height) + 12px); }
   .admin-header-actions { width: 100%; }
-  .admin-header-actions .filter-select { flex: 1; min-width: 0; }
+  /* === DROPDOWN PADDING FIX === */
+  .admin-header-actions .filter-select {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234A5B6E' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
 
   /* detail-photos already 2-col */
 
@@ -2268,42 +2312,89 @@ ul { list-style: none; }
   .bro-stats { grid-template-columns: repeat(2, 1fr); }
   .bro-prog-label { min-width: 56px; font-size: 0.65rem; }
 
-  /* ROE breakdown table */
-  .roe-br-row {
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 8px;
-    padding: 10px 0;
-  }
+  /* === ROE BREAKDOWN - CARD LAYOUT === */
   .roe-br-row.header { display: none; }
-  .roe-br-zip { font-size: 0.72rem; }
-  .roe-br-area { font-size: 0.7rem; }
+  .roe-br-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 0;
+  }
+  .roe-br-zip {
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+  .roe-br-area {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    flex: 1;
+  }
+  .roe-br-rate {
+    order: 0;
+    text-align: right;
+    width: auto;
+  }
   .roe-br-sent,
-  .roe-br-nr { text-align: left; font-size: 0.72rem; }
-  .roe-br-sent::before { content: 'Sent: '; font-weight: 500; color: var(--text-muted); }
-  .roe-br-nr::before { content: 'NR: '; font-weight: 500; }
-  .roe-br-rate { text-align: left; width: fit-content; }
-  .roe-pie-container { height: 220px; }
+  .roe-br-nr {
+    font-size: 0.7rem;
+    text-align: left;
+  }
+  .roe-br-sent::before { content: 'Sent: '; font-weight: 600; color: var(--text-muted); font-family: var(--font-body); }
+  .roe-br-nr::before { content: 'No Reply: '; font-weight: 600; font-family: var(--font-body); }
+
+  /* === PIE CHART LEGEND FIX === */
+  .roe-pie-container {
+    height: auto;
+    min-height: 280px;
+  }
+  .roe-chart-wrap {
+    display: flex;
+    flex-direction: column;
+  }
 
   /* Work order header */
   .wo-header { flex-direction: column; gap: 12px; }
   .wo-header-actions { width: 100%; }
   .wo-header-actions .btn-icon { flex: 0 0 auto; }
 
-  /* Scheduled reports */
+  /* === SCHEDULED REPORTS MOBILE CARDS === */
   .sr-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .sr-new-btn { width: 100%; justify-content: center; }
   .sr-table-header { display: none; }
   .sr-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 14px 16px;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
   }
-  .sr-td.report { width: 100%; font-weight: 600; }
-  .sr-td.freq { order: 1; }
-  .sr-td.next { order: 2; margin-left: auto; }
-  .sr-td.recip { width: 100%; order: 3; }
-  .sr-td.status-col { order: 4; }
-  .sr-td.actions-col { order: 5; margin-left: auto; }
+  .sr-td {
+    font-size: 0.76rem;
+  }
+  .sr-td.report {
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .sr-td.freq::before { content: 'Frequency: '; color: var(--text-muted); font-weight: 500; }
+  .sr-td.next::before { content: 'Next: '; color: var(--text-muted); font-weight: 500; }
+  .sr-td.recip {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .sr-td.recip::before { content: 'Recipients: '; color: var(--text-muted); font-weight: 500; width: 100%; display: block; margin-bottom: 2px; font-size: 0.68rem; }
+  .sr-row-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .sr-td.status-col { order: unset; }
+  .sr-td.actions-col { order: unset; margin-left: auto; }
 
   /* Heatmap */
   .heatmap-header { flex-direction: column; align-items: flex-start; }
@@ -2315,6 +2406,10 @@ ul { list-style: none; }
   .sr-form-actions { flex-direction: column; }
   .sr-cancel-btn,
   .sr-save-btn { width: 100%; justify-content: center; }
+  .sr-input {
+    padding: 11px 14px;
+    font-size: 0.82rem;
+  }
 
   /* Map legend */
   .map-legend {
@@ -2358,16 +2453,33 @@ ul { list-style: none; }
 
   .heatmap-toggles { flex-wrap: wrap; }
 
-  /* Nav */
+  /* Nav — keep inspector tabs visible, hide only breadcrumb text */
   .nav-inner { padding: 0 12px; }
   .nav-role-badge { font-size: 0.6rem; padding: 2px 6px; }
   .nav-title { font-size: 0.85rem; }
-  .nav-center { display: none; }
+  /* Don't hide nav-center on mobile anymore — inspector needs it */
+  /* .nav-center { display: none; } — removed */
+
+  /* Homeowner stepper overlap fix — tighter on small screens */
+  .stepper-visible .screen-scroll {
+    padding-top: calc(var(--nav-height) + 68px);
+  }
+  .mobile-stepper {
+    padding: 8px 14px 10px;
+  }
+  .stepper-step { min-width: 40px; }
+  .stepper-step span { width: 24px; height: 24px; font-size: 0.65rem; }
+  .stepper-step small { font-size: 0.52rem; }
+  .stepper-connector { width: 16px; margin: 0 2px; margin-bottom: 14px; }
 
   /* Admin dashboard */
   .section-title { font-size: 1.2rem; }
   .admin-header { gap: 8px; }
   .admin-header-actions { flex-direction: column; gap: 6px; }
+  .admin-header-actions .filter-select {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
   .admin-chart-card { padding: 14px; }
   .chart-container { height: 180px; }
   .admin-map { height: 180px; }
@@ -2379,24 +2491,37 @@ ul { list-style: none; }
   .bro-gauge-wrap.ai-gauge { width: 85px; height: 85px; }
   .bro-gauge-pct { font-size: 1rem; }
   .bro-gauge-label { font-size: 0.5rem; }
-  .bro-gauge-legend { gap: 8px; }
+  .bro-gauge-legend { gap: 8px; flex-wrap: wrap; justify-content: center; }
   .bro-gl-item { font-size: 0.6rem; }
   .bro-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
   .bro-stat-value { font-size: 0.95rem; }
   .bro-stat-label { font-size: 0.65rem; }
+  .bro-stat-note { font-size: 0.58rem; }
   .bro-prog-label { min-width: 50px; font-size: 0.62rem; }
   .bro-prog-val { font-size: 0.65rem; min-width: 32px; }
+  .bro-ai-insight p { font-size: 0.68rem; }
 
-  /* ROE */
-  .roe-pie-container { height: 180px; }
-  .roe-br-row {
-    grid-template-columns: 1fr;
-    gap: 2px;
-    padding: 8px 0;
+  /* === ROE PIE CHART + BREAKDOWN MOBILE === */
+  .roe-pie-container {
+    height: auto;
+    min-height: 240px;
   }
-  .roe-br-zip { font-size: 0.7rem; }
+  .roe-br-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background: var(--bg-section);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+  }
+  .roe-br-zip { font-size: 0.74rem; font-weight: 600; }
   .roe-br-area { font-size: 0.68rem; }
+  .roe-br-sent, .roe-br-nr { font-size: 0.7rem; }
+  .roe-br-rate { margin-top: 2px; }
   .roe-total-badge { font-size: 0.68rem; }
+  .roe-breakdown { gap: 0; }
 
   /* Funnel */
   .funnel-stage { gap: 8px; }
@@ -2405,15 +2530,19 @@ ul { list-style: none; }
   .funnel-label span { font-size: 0.6rem; }
   .funnel-bar { height: 22px; }
 
-  /* Scheduled reports */
-  .scheduled-reports { padding: 16px; }
+  /* === SCHEDULED REPORTS 480px === */
+  .scheduled-reports { padding: 14px; }
   .sr-form-row { grid-template-columns: 1fr; }
-  .sr-row { padding: 12px; }
-  .sr-email-chip { max-width: 120px; font-size: 0.6rem; }
+  .sr-input { padding: 12px 14px; font-size: 0.82rem; }
+  .sr-row { padding: 14px 12px; }
+  .sr-td.report { font-size: 0.78rem; }
+  .sr-email-chip { max-width: 140px; font-size: 0.62rem; }
+  .sr-new-btn { font-size: 0.72rem; padding: 10px 14px; }
 
   /* Chart legend */
-  .chart-legend-custom { gap: 10px; flex-wrap: wrap; }
-  .cl-item { font-size: 0.68rem; }
+  .chart-legend-custom { gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .cl-item { font-size: 0.65rem; }
+  .ai-chart-insight p { font-size: 0.68rem; }
 
   /* Work orders */
   .wo-address { font-size: 0.92rem; }
@@ -2454,7 +2583,12 @@ ul { list-style: none; }
   .report-card { padding: 14px; }
   .report-referrals { padding: 16px; }
   .report-footer { padding: 16px; flex-direction: column; }
-  .ai-methodology { padding: 16px; }
+  .ai-methodology { padding: 14px; }
+  .ai-methodology h4 { font-size: 0.82rem; }
+  .method-item { padding: 10px 12px; }
+  .method-item strong { min-width: 80px; font-size: 0.7rem; }
+  .method-item span,
+  .method-item p { font-size: 0.65rem; }
 
   /* Heatmap legend */
   .heatmap-legend { flex-wrap: wrap; gap: 6px; font-size: 0.65rem; }
@@ -2467,6 +2601,9 @@ ul { list-style: none; }
   .property-quick-info { padding: 12px 8px; }
   .pqi-item strong { font-size: 0.78rem; }
   .pqi-item small { font-size: 0.6rem; }
+
+  /* Inspector bottom nav — slightly tighter on very small screens */
+  .insp-mobile-nav .insp-tab-label { font-size: 0.65rem; }
 }
 
 /* Leaflet overrides — Light theme (natural map tiles) */
@@ -3492,4 +3629,71 @@ ul { list-style: none; }
   border-color: var(--accent);
 }
 
-/* (Responsive rules for new components consolidated into main breakpoints above) */
+/* ---------- Inspector Mobile Bottom Tab Bar ---------- */
+.insp-mobile-nav {
+  display: none; /* hidden by default, shown via class + media query */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.insp-mobile-nav .insp-tab-bar {
+  display: flex;
+}
+.insp-mobile-nav .insp-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 0 8px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+}
+.insp-mobile-nav .insp-tab.active {
+  color: var(--accent);
+}
+.insp-mobile-nav .insp-tab.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2.5px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+}
+.insp-mobile-nav .insp-tab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+/* When inspector bottom nav is visible on mobile, adjust layout */
+@media (max-width: 768px) {
+  .has-insp-bottom-nav .screen-scroll {
+    padding-bottom: 70px;
+  }
+  .has-insp-bottom-nav .insp-map-area {
+    padding-bottom: 56px;
+  }
+  .has-insp-bottom-nav .insp-detail-panel {
+    bottom: 56px;
+  }
+  .has-insp-bottom-nav .map-legend {
+    bottom: 70px;
+  }
+}
