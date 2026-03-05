@@ -73,14 +73,14 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: var(--font-body);
   background: var(--bg-page);
   color: var(--text-primary);
   overflow: hidden;
   height: 100dvh;
-  width: 100vw;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -2124,6 +2124,17 @@ ul { list-style: none; }
   .methodology-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .container-wide { padding: 0 16px; }
+  .burn-rate-overview { gap: 20px; padding: 20px; }
+  .bro-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .sr-table-header,
+  .sr-row {
+    grid-template-columns: 2fr 0.8fr 1.5fr 1.2fr 0.7fr 0.6fr;
+  }
+  .roe-br-row {
+    grid-template-columns: 1fr 1.2fr 0.6fr 0.6fr 0.7fr;
+    font-size: 0.72rem;
+  }
 }
 
 /* Mobile */
@@ -2156,6 +2167,7 @@ ul { list-style: none; }
   .verify-match-icon { display: none; }
 
   .container-report { padding: 0 16px; }
+  .container-wide { padding: 0 14px; }
 
   .report-grid {
     grid-template-columns: 1fr;
@@ -2174,6 +2186,19 @@ ul { list-style: none; }
   .report-score {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* Report bottom actions */
+  .report-bottom-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px 16px 40px;
+  }
+  .report-bottom-actions .btn-primary,
+  .report-bottom-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
   }
 
   /* Inspector mobile */
@@ -2210,12 +2235,117 @@ ul { list-style: none; }
 
   .flag-item { flex-wrap: wrap; }
   .flag-count { display: none; }
+
+  /* Nav adjustments */
+  .nav-role-badge { font-size: 0.65rem; padding: 3px 8px; }
+  .nav-title { font-size: 0.95rem; }
+
+  /* Chart title row */
+  .chart-title-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Funnel chart */
+  .funnel-label { min-width: 70px; }
+  .funnel-label strong { font-size: 0.8rem; }
+  .funnel-label span { font-size: 0.65rem; }
+
+  /* Admin chart cards */
+  .admin-chart-card { padding: 16px; }
+  .chart-container { height: 200px; }
+  .admin-map { height: 220px; }
+
+  /* Burn rate overview */
+  .burn-rate-overview {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+    padding: 20px;
+  }
+  .bro-gauges { justify-content: center; }
+  .bro-gauge-wrap { width: 100px; height: 100px; }
+  .bro-gauge-wrap.ai-gauge { width: 100px; height: 100px; }
+  .bro-gauge-pct { font-size: 1.2rem; }
+  .bro-gauge-label { font-size: 0.55rem; }
+  .bro-stats { grid-template-columns: repeat(2, 1fr); }
+  .bro-prog-label { min-width: 56px; font-size: 0.65rem; }
+
+  /* ROE breakdown table */
+  .roe-br-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 8px;
+    padding: 10px 0;
+  }
+  .roe-br-row.header { display: none; }
+  .roe-br-zip { font-size: 0.72rem; }
+  .roe-br-area { font-size: 0.7rem; }
+  .roe-br-sent,
+  .roe-br-nr { text-align: left; font-size: 0.72rem; }
+  .roe-br-sent::before { content: 'Sent: '; font-weight: 500; color: var(--text-muted); }
+  .roe-br-nr::before { content: 'NR: '; font-weight: 500; }
+  .roe-br-rate { text-align: left; width: fit-content; }
+  .roe-pie-container { height: 220px; }
+
+  /* Work order header */
+  .wo-header { flex-direction: column; gap: 12px; }
+  .wo-header-actions { width: 100%; }
+  .wo-header-actions .btn-icon { flex: 0 0 auto; }
+
+  /* Scheduled reports */
+  .sr-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .sr-table-header { display: none; }
+  .sr-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 16px;
+  }
+  .sr-td.report { width: 100%; font-weight: 600; }
+  .sr-td.freq { order: 1; }
+  .sr-td.next { order: 2; margin-left: auto; }
+  .sr-td.recip { width: 100%; order: 3; }
+  .sr-td.status-col { order: 4; }
+  .sr-td.actions-col { order: 5; margin-left: auto; }
+
+  /* Heatmap */
+  .heatmap-header { flex-direction: column; align-items: flex-start; }
+  .heatmap-toggles { width: 100%; }
+  .hm-toggle { flex: 1; text-align: center; }
+
+  /* Schedule form */
+  .sr-form-row { grid-template-columns: 1fr 1fr; }
+  .sr-form-actions { flex-direction: column; }
+  .sr-cancel-btn,
+  .sr-save-btn { width: 100%; justify-content: center; }
+
+  /* Map legend */
+  .map-legend {
+    top: auto;
+    bottom: 60px;
+    right: 8px;
+    left: auto;
+    padding: 10px 12px;
+    min-width: 140px;
+  }
+
+  /* AI hero banner */
+  .ai-hero-top { flex-direction: column; }
+  .ai-hero-actions { width: 100%; }
+  .ai-hero-actions button { flex: 1; }
+  .ai-hero-top h3 { font-size: 1.1rem; }
+
+  /* Report photos */
+  .report-photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .ai-meta-strip { flex-wrap: wrap; gap: 8px; }
+
+  /* Work order photos */
+  .wo-photo-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 480px) {
   .hero-title { font-size: 2rem; }
   .login-content { padding: 16px; }
-  .container { padding: 0 16px; }
+  .container { padding: 0 12px; }
+  .container-wide { padding: 0 10px; }
+  .container-report { padding: 0 10px; }
 
   .photo-grid {
     grid-template-columns: 1fr 1fr;
@@ -2227,6 +2357,116 @@ ul { list-style: none; }
   .wo-actions { flex-direction: column; gap: 6px; }
 
   .heatmap-toggles { flex-wrap: wrap; }
+
+  /* Nav */
+  .nav-inner { padding: 0 12px; }
+  .nav-role-badge { font-size: 0.6rem; padding: 2px 6px; }
+  .nav-title { font-size: 0.85rem; }
+  .nav-center { display: none; }
+
+  /* Admin dashboard */
+  .section-title { font-size: 1.2rem; }
+  .admin-header { gap: 8px; }
+  .admin-header-actions { flex-direction: column; gap: 6px; }
+  .admin-chart-card { padding: 14px; }
+  .chart-container { height: 180px; }
+  .admin-map { height: 180px; }
+
+  /* Burn rate */
+  .burn-rate-overview { padding: 16px; gap: 16px; }
+  .bro-gauges { gap: 10px; }
+  .bro-gauge-wrap,
+  .bro-gauge-wrap.ai-gauge { width: 85px; height: 85px; }
+  .bro-gauge-pct { font-size: 1rem; }
+  .bro-gauge-label { font-size: 0.5rem; }
+  .bro-gauge-legend { gap: 8px; }
+  .bro-gl-item { font-size: 0.6rem; }
+  .bro-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .bro-stat-value { font-size: 0.95rem; }
+  .bro-stat-label { font-size: 0.65rem; }
+  .bro-prog-label { min-width: 50px; font-size: 0.62rem; }
+  .bro-prog-val { font-size: 0.65rem; min-width: 32px; }
+
+  /* ROE */
+  .roe-pie-container { height: 180px; }
+  .roe-br-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 8px 0;
+  }
+  .roe-br-zip { font-size: 0.7rem; }
+  .roe-br-area { font-size: 0.68rem; }
+  .roe-total-badge { font-size: 0.68rem; }
+
+  /* Funnel */
+  .funnel-stage { gap: 8px; }
+  .funnel-label { min-width: 60px; }
+  .funnel-label strong { font-size: 0.72rem; }
+  .funnel-label span { font-size: 0.6rem; }
+  .funnel-bar { height: 22px; }
+
+  /* Scheduled reports */
+  .scheduled-reports { padding: 16px; }
+  .sr-form-row { grid-template-columns: 1fr; }
+  .sr-row { padding: 12px; }
+  .sr-email-chip { max-width: 120px; font-size: 0.6rem; }
+
+  /* Chart legend */
+  .chart-legend-custom { gap: 10px; flex-wrap: wrap; }
+  .cl-item { font-size: 0.68rem; }
+
+  /* Work orders */
+  .wo-address { font-size: 0.92rem; }
+  .wo-card { padding: 16px; }
+  .wo-comment-body { padding: 8px 10px; }
+  .wo-comment-body p { font-size: 0.72rem; }
+  .wo-comment-meta { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .wo-photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .wo-add-comment { flex-direction: column; gap: 6px; }
+  .wo-comment-submit { width: 100%; padding: 10px; }
+
+  /* Inspector detail panel */
+  .insp-detail-panel { max-height: 80%; }
+  .detail-content { padding: 16px 14px; }
+  .detail-photo { max-height: 65px; }
+  .detail-flags { gap: 4px; }
+  .detail-flag { font-size: 0.65rem; padding: 3px 8px; }
+
+  /* Docusign */
+  .docusign-body { padding: 16px 14px; }
+  .sig-text { font-size: 1.5rem; }
+
+  /* AI hero */
+  .ai-hero-banner { padding: 20px 16px; }
+  .ai-hero-top h3 { font-size: 1rem; }
+  .ai-hero-top p { font-size: 0.76rem; }
+  .ai-hero-actions { flex-direction: column; }
+  .download-report-btn,
+  .share-report-btn { width: 100%; justify-content: center; font-size: 0.72rem; }
+  .ai-badge-large { font-size: 0.62rem; }
+  .ai-meta-strip { font-size: 0.65rem; }
+
+  /* Report */
+  .report-header { margin-bottom: 16px; }
+  .report-score { gap: 16px; padding: 16px; }
+  .score-ring { width: 80px; height: 80px; }
+  .score-num { font-size: 1.4rem; }
+  .report-card { padding: 14px; }
+  .report-referrals { padding: 16px; }
+  .report-footer { padding: 16px; flex-direction: column; }
+  .ai-methodology { padding: 16px; }
+
+  /* Heatmap legend */
+  .heatmap-legend { flex-wrap: wrap; gap: 6px; font-size: 0.65rem; }
+  .heatmap-gradient { width: 80px; }
+
+  /* Map container */
+  .map-container { height: 200px; margin: 0 12px; }
+
+  /* Property quick info */
+  .property-quick-info { padding: 12px 8px; }
+  .pqi-item strong { font-size: 0.78rem; }
+  .pqi-item small { font-size: 0.6rem; }
 }
 
 /* Leaflet overrides — Light theme (natural map tiles) */
@@ -3252,101 +3492,4 @@ ul { list-style: none; }
   border-color: var(--accent);
 }
 
-/* ---------- Responsive: New components ---------- */
-@media (max-width: 768px) {
-  .map-legend {
-    top: auto;
-    bottom: 60px;
-    right: 8px;
-    left: auto;
-    padding: 10px 12px;
-    min-width: 140px;
-  }
-  .ai-hero-top {
-    flex-direction: column;
-  }
-  .ai-hero-actions {
-    width: 100%;
-  }
-  .ai-hero-actions button {
-    flex: 1;
-  }
-  .report-photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .ai-meta-strip {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .methodology-grid {
-    grid-template-columns: 1fr;
-  }
-  .wo-photo-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .burn-rate-overview {
-    flex-direction: column;
-    gap: 20px;
-    align-items: stretch;
-  }
-  .bro-gauges {
-    justify-content: center;
-  }
-  .bro-gauge-wrap {
-    width: 100px;
-    height: 100px;
-  }
-  .bro-gauge-pct {
-    font-size: 1.2rem;
-  }
-  .bro-gauge-label {
-    font-size: 0.55rem;
-  }
-  .bro-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sr-table-header {
-    display: none;
-  }
-  .sr-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 14px 16px;
-  }
-  .sr-td.report {
-    width: 100%;
-    font-weight: 600;
-  }
-  .sr-td.freq {
-    order: 1;
-  }
-  .sr-td.next {
-    order: 2;
-    margin-left: auto;
-  }
-  .sr-td.recip {
-    width: 100%;
-    order: 3;
-  }
-  .sr-td.status-col {
-    order: 4;
-  }
-  .sr-td.actions-col {
-    order: 5;
-    margin-left: auto;
-  }
-}
-@media (max-width: 480px) {
-  .report-photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .wo-photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .wo-comment-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-  }
-}
+/* (Responsive rules for new components consolidated into main breakpoints above) */
